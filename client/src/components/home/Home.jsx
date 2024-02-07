@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./home.css";
-import { baseURL } from "../../../credentials";
+import { baseURL } from "../../../credentials.js";
 import axios from "axios";
 import { CircleTick, LoadingTwoLoop } from "../../assets/LoadingLoop";
 
@@ -14,7 +14,6 @@ export default function Home() {
     async function handleSubmit(e){
         setLoading(true);
         e.preventDefault();
-        console.log(formData);
         try {
             const response = await axios.post(`${baseURL}/sendEmail`,formData);
             setLoading(false);
