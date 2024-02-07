@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./home.css";
 import { baseURL } from "../../../credentials.js";
 import axios from "axios";
-import { CircleTick, LoadingTwoLoop } from "../../assets/LoadingLoop";
+import { CircleTick, Fail, LoadingTwoLoop } from "../../assets/LoadingLoop";
 
 export default function Home() {
     const[formData,setFormData] = useState({
@@ -20,7 +20,6 @@ export default function Home() {
             setStatus(response.status);
         } catch (error) {
             setLoading(false);
-            console.log(error);
             setStatus(400);
         }
     }
@@ -34,23 +33,26 @@ export default function Home() {
         <div className="shape"></div>
         <div className="shape"></div>
     </div>
-    <form onReset={handleReset} onSubmit={handleSubmit}>
+    <form onReset={handleReset} onSubmit={handleSubmit} >
         <h3>Send Email</h3>
 
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Name</label >
         <input type="text" placeholder="Name" id="name" 
         onChange={(e) => {
+            setStatus(null);
         setFormData({ ...formData, name: e.target.value });
     }}/>
 
         <label htmlFor="email">Email</label>
         <input type="email" placeholder="Email" id="email" 
         onChange={(e) => {
+            setStatus(null);
             setFormData({ ...formData, email: e.target.value });
         }}/>
 
         {loading && <button type="button">Sending <LoadingTwoLoop/></button>}
-        {status===200 && <button type="reset">Sent <CircleTick/></button>}
+        {status!==null && (status===200 ? <button type="reset" style={{color:"#4BB543" }}>Sent <CircleTick/></button>:
+        status===400 && <button type="reset" style={{color:"#FC100D"}}>Couldn't sent. <Fail/></button>)}
         {!loading && !status && <button type="submit">Send </button>}
     <p style={{textAlign:"center", marginTop:"30px"}}>Build By Jayant Thakur</p>
     </form>

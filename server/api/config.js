@@ -5,13 +5,13 @@ const transporter = createTransport({
     host:"smtp-relay.brevo.com",
     port:587,
     auth:{
-        user:"jayantthakur108@gmail.com",
+        user:process.env.USER,
         pass:process.env.SMTPKEY
     }
 });
 export const sendEmail = (name,email,res)=>{
     const mailOptions = {
-        from:"Jayant061@gmail.com",
+        from:process.env.FROM,
         to:email,
         subject:"Thank You",
         text:`Name: ${name}\n Message: Thank you for your Subscription!`
@@ -19,7 +19,7 @@ export const sendEmail = (name,email,res)=>{
 
     transporter.sendMail(mailOptions,(error,info)=>{
         if(error){
-            res.sendStatus(404);
+            res.sendStatus(400);
         }else{
             res.sendStatus(200);
         }

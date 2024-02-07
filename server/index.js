@@ -12,17 +12,8 @@ app.use(cors());
 
 app.get("/",(req,res)=>{
     res.send("Working all Good!");
-    console.log(process.env.APIKEY);
 });
-app.get("/send",(req,res)=>{
-    const name=req?.query?.name;
-    const email=req?.query?.email;
-    // console.log(name,email);
-    // name && sendEmail("Sub Check","Content check",email,name,"Jayant","Jayantthakur108@gmail.com");
-    sendEmail(name,email,res);
-    // res.send("Sent!");
 
-});
 app.post("/sendEmail",(req,res)=>{
     const name = req.body.name;
     const email = req.body.email;
