@@ -15,9 +15,10 @@ app.get("/",(req,res)=>{
 });
 
 app.post("/sendEmail",(req,res)=>{
-    const name = req.body.name;
-    const email = req.body.email;
-    sendEmail(name,email,res);
+    const name = req?.body?.name;
+    const email = req?.body?.email;
+    const message = req?.body?.message
+    sendEmail(name,email,message,res);
 })
 
 app.listen(3002,()=>{console.log("Server is running at port 3002");});

@@ -9,12 +9,12 @@ const transporter = createTransport({
         pass:process.env.SMTPKEY
     }
 });
-export const sendEmail = (name,email,res)=>{
+export const sendEmail = (name,email,message,res)=>{
     const mailOptions = {
         from:process.env.FROM,
         to:email,
         subject:"Thank You",
-        text:`Name: ${name}\n Message: Thank you for your Subscription!`
+        text:`Name: ${name}\n Message: ${message}\n Please do not reply on this email. It is a system generated email`
     }
 
     transporter.sendMail(mailOptions,(error,info)=>{

@@ -52,6 +52,7 @@ form{
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
+    overflow: auto;
 }
 form *{
     font-family: 'Poppins',sans-serif;
@@ -73,7 +74,7 @@ label{
     font-size: 16px;
     font-weight: 500;
 }
-input{
+input,textarea{
     display: block;
     height: 50px;
     width: 100%;
@@ -86,6 +87,10 @@ input{
 }
 ::placeholder{
     color: #e5e5e5;
+}
+textarea{
+    min-width: 100%;
+    padding: 10px;
 }
 button{
     display: flex;

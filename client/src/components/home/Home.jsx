@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import { baseURL } from "../../../credentials.js";
 import axios from "axios";
 import { CircleTick, Fail, LoadingTwoLoop } from "../../assets/LoadingLoop";
+import { useDispatch, useSelector } from "react-redux";
+import { updateAll, updateEmail, updateMessage, updateName } from "../../store/UserDataSlice.js";
 
 export default function Home() {
-    const[formData,setFormData] = useState({
-        name:"",
-        email:""
-    });
+    const dispatch = useDispatch();
+    const store = useSelector((state)=>state?.userData);
     const [loading,setLoading] = useState(false);
     const [status,setStatus] = useState(null);
     async function handleSubmit(e){
         setLoading(true);
         e.preventDefault();
         try {
-            const response = await axios.post(`${baseURL}/sendEmail`,formData);
+            const response = await axios.post(`${baseURL}/sendEmail`,store);
             setLoading(false);
             setStatus(response.status);
         } catch (error) {
@@ -24,7 +24,7 @@ export default function Home() {
         }
     }
     function handleReset(){
-            setFormData({name:"",email:""});
+            dispatch(updateAll({name:"",email:"",message:""}));
             setLoading(false);
             setStatus(null)
     }
@@ -37,17 +37,25 @@ export default function Home() {
         <h3>Send Email</h3>
 
         <label htmlFor="name">Name</label >
-        <input type="text" placeholder="Name" id="name" 
+        <input type="text" placeholder="Name" id="name" required
         onChange={(e) => {
             setStatus(null);
-        setFormData({ ...formData, name: e.target.value });
+        dispatch(updateName(e.target.value));
+        
     }}/>
 
         <label htmlFor="email">Email</label>
-        <input type="email" placeholder="Email" id="email" 
+        <input type="email" placeholder="Email" id="email" required
         onChange={(e) => {
             setStatus(null);
-            setFormData({ ...formData, email: e.target.value });
+            dispatch(updateEmail(e.target.value))
+        }}/>
+
+        <label htmlFor="message">Message</label>
+        <textarea name="message" id="message" placeholder="your message here"
+        onChange={(e)=>{
+            setStatus(null);
+            dispatch(updateMessage(e.target.value));
         }}/>
 
         {loading && <button type="button">Sending <LoadingTwoLoop/></button>}

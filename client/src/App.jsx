@@ -6,7 +6,6 @@ export default function App(){
   const initiateServer = async()=>{
     try {
       const res = await axios.get(baseURL);
-      console.log(res.data);
     } catch (error) {
       
     }
